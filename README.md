@@ -4,14 +4,16 @@
 
 CharityFlow is a decentralized application (DApp) built on Ethereum that enables donors to track exactly how their charitable donations are used. Every donation, withdrawal, and proof of work is recorded immutably on the blockchain — making charity fully transparent for the first time.
 
+> **Report:** [MDT915_Project_Report.pdf](./MDT915_Project_Report.pdf) | [MDT915_Project_Report.md](./MDT915_Project_Report.md)
+
 ---
 
 ## Team Members
 
 | Name | Student ID | Role |
 |------|------------|------|
-| Seif Sid Ali Maloufi | [Your ID] | Developer (Smart Contracts, Frontend, Web3, IPFS) |
-| Jyldyz Sulaimanova | [Your ID] | Report & Theory (Documentation, Research, Academic Writing) |
+| Seif Sid Ali Maloufi | 8718179 | Developer (Smart Contracts, Frontend, Web3, IPFS) |
+| Jyldyz Sulaimanova | 9105141 | Report & Theory (Documentation, Research, Academic Writing) |
 
 ---
 
