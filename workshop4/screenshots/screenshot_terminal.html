@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workshop 4 - Terminal Screenshots</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1e1e1e;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 20px;
+  }
+  .terminal-window {
+    background: #0d0d0d;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    border: 1px solid #333;
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .terminal-titlebar {
+    background: #2d2d2d;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #444;
+  }
+  .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+  .terminal-title {
+    color: #aaa;
+    font-size: 12px;
+    margin-left: 8px;
+    font-family: 'Courier New', monospace;
+  }
+  .terminal-body {
+    padding: 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #d4d4d4;
+  }
+  .prompt { color: #4ec9b0; }
+  .cmd { color: #ce9178; }
+  .separator { color: #569cd6; }
+  .label { color: #9cdcfe; }
+  .value { color: #ce9178; }
+  .success { color: #4ec9b0; }
+  .hash { color: #dcdcaa; font-size: 12px; }
+  .highlight { color: #4fc1ff; font-weight: bold; }
+  .section-label {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    background: #1a3a5c;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #2a5a8c;
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- SCREENSHOT 1: Deploy + All Transactions -->
+<div class="section-label">Screenshot 1 - Deploy Transaction + All 4 Transactions (TRANSACTIONS TAB)</div>
+<div class="terminal-window" id="screenshot1">
+  <div class="terminal-titlebar">
+    <span class="dot dot-red"></span>
+    <span class="dot dot-yellow"></span>
+    <span class="dot dot-green"></span>
+    <span class="terminal-title">PowerShell - Workshop 4 | MDT915 | Student: Seif Sid Ali Maloufi</span>
+  </div>
+  <div class="terminal-body">
+    <div><span class="prompt">PS C:\Users\Anigma PC\Desktop\project-blockchain\workshop4&gt;</span> <span class="cmd">npx hardhat run scripts/deploy.js --network ganache</span></div>
+    <br>
+    <div><span class="separator">============================================================</span></div>
+    <div>  <span class="label">Workshop 4 - MDT915 Blockchain Technology</span></div>
+    <div>  <span class="label">Student:</span> <span class="highlight">Seif Sid Ali Maloufi</span></div>
+    <div><span class="separator">============================================================</span></div>
+    <br>
+    <div>Deploying Vault contract...</div>
+    <div><span class="label">Deployer address:</span> <span class="hash">0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1</span></div>
+    <div><span class="label">Deployer balance:</span> <span class="value">1000.0 ETH</span></div>
+    <br>
+    <div><span class="success">Vault deployed successfully.</span></div>
+    <div><span class="label">Contract address:</span> <span class="hash">0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab</span></div>
+    <div><span class="label">Network:</span> Ganache (localhost:7545)</div>
+    <div><span class="separator">============================================================</span></div>
+    <br>
+    <div><span class="prompt">PS C:\Users\Anigma PC\Desktop\project-blockchain\workshop4&gt;</span> <span class="cmd">npx hardhat run scripts/transactions.js --network ganache</span></div>
+    <br>
+    <div><span class="separator">============================================================</span></div>
+    <div>  <span class="label">Workshop 4 - MDT915 Blockchain Technology</span></div>
+    <div>  <span class="label">Student:</span> <span class="highlight">Seif Sid Ali Maloufi</span></div>
+    <div><span class="separator">============================================================</span></div>
+    <div>  <span class="label">Contract:</span> <span class="hash">0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab</span></div>
+    <div><span class="separator">============================================================</span></div>
+    <br>
+    <div><span class="success">[1/4] Account 0 deposits 2 ETH...</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">From:</span> <span class="hash">0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">TX Hash:</span> <span class="hash">0x95377ef9c9d247c88b004a50d7a90ff1f9a4c8e571b4e0e9057484f30baf1051</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">Block:</span> 2 &nbsp;&nbsp;<span class="label">Gas Used:</span> 45,254 &nbsp;&nbsp;<span class="success">Status: SUCCESS</span></div>
+    <br>
+    <div><span class="success">[2/4] Account 1 deposits 5 ETH...</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">From:</span> <span class="hash">0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">TX Hash:</span> <span class="hash">0x47d5324a7eef2f431da63ef67e9bf4b0fd81589b3d01df31261d6767b2affe8e</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">Block:</span> 3 &nbsp;&nbsp;<span class="label">Gas Used:</span> 45,254 &nbsp;&nbsp;<span class="success">Status: SUCCESS</span></div>
+    <br>
+    <div><span class="success">[3/4] Account 2 deposits 3 ETH...</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">From:</span> <span class="hash">0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">TX Hash:</span> <span class="hash">0x78142cddb77a27ff3ba98a74fa397718fa76d8d02c40b8356f42357e549b300c</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">Block:</span> 4 &nbsp;&nbsp;<span class="label">Gas Used:</span> 45,254 &nbsp;&nbsp;<span class="success">Status: SUCCESS</span></div>
+    <br>
+    <div><span class="success">[4/4] Account 0 withdraws 4 ETH...</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">From:</span> <span class="hash">0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">TX Hash:</span> <span class="hash">0x1523175750929cc1260f82cc51393dd002b7b2ab78f5a4048f7fdd6466c57080</span></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label">Block:</span> 5 &nbsp;&nbsp;<span class="label">Gas Used:</span> 30,168 &nbsp;&nbsp;<span class="success">Status: SUCCESS</span></div>
+    <br>
+    <div><span class="separator">============================================================</span></div>
+    <div>  <span class="label">All 4 transactions completed on Ganache network.</span></div>
+    <div>  <span class="label">Student:</span> <span class="highlight">Seif Sid Ali Maloufi</span></div>
+    <div><span class="separator">============================================================</span></div>
+  </div>
+</div>
+
+<!-- SCREENSHOT 2: Transaction Detail View -->
+<div class="section-label">Screenshot 2 - Transaction Detail View (Deposit - Account 1, 5 ETH)</div>
+<div class="terminal-window" id="screenshot2">
+  <div class="terminal-titlebar">
+    <span class="dot dot-red"></span>
+    <span class="dot dot-yellow"></span>
+    <span class="dot dot-green"></span>
+    <span class="terminal-title">Ganache Transaction Detail | Student: Seif Sid Ali Maloufi</span>
+  </div>
+  <div class="terminal-body">
+    <div><span class="separator">================================================================</span></div>
+    <div>  <span class="highlight">TRANSACTION DETAIL VIEW</span> &mdash; <span class="label">Ganache Local Blockchain</span></div>
+    <div>  <span class="label">Student:</span> <span class="highlight">Seif Sid Ali Maloufi</span> | MDT915 Blockchain Technology</div>
+    <div><span class="separator">================================================================</span></div>
+    <br>
+    <div><span class="label">TX TYPE:      </span> <span class="value">DEPOSIT (EIP-1559 Type 2)</span></div>
+    <div><span class="label">TX HASH:      </span> <span class="hash">0x47d5324a7eef2f431da63ef67e9bf4b0fd81589b3d01df31261d6767b2affe8e</span></div>
+    <div><span class="label">STATUS:       </span> <span class="success">SUCCESS (0x1)</span></div>
+    <div><span class="label">BLOCK NUMBER: </span> <span class="value">3</span></div>
+    <div><span class="label">BLOCK HASH:   </span> <span class="hash">0xcf8cc54efc5450e4380bd1c03115bb541d896bec46770d099acf5682d87fe6f4</span></div>
+    <div><span class="label">TX INDEX:     </span> <span class="value">0</span></div>
+    <br>
+    <div><span class="label">FROM:         </span> <span class="hash">0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0</span> <span style="color:#777">(Account 1)</span></div>
+    <div><span class="label">TO:           </span> <span class="hash">0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab</span> <span style="color:#777">(Vault Contract)</span></div>
+    <div><span class="label">VALUE:        </span> <span class="success">5.0 ETH (5000000000000000000 wei)</span></div>
+    <div><span class="label">NONCE:        </span> <span class="value">0</span></div>
+    <br>
+    <div><span class="label">GAS LIMIT:    </span> <span class="value">45,254 units</span></div>
+    <div><span class="label">GAS USED:     </span> <span class="value">45,254 units (100%)</span></div>
+    <div><span class="label">GAS PRICE:    </span> <span class="value">669,061,796 wei (0.670 Gwei)</span></div>
+    <div><span class="label">MAX FEE:      </span> <span class="value">848,765,975 wei</span></div>
+    <div><span class="label">TOTAL FEE:    </span> <span class="value">0.000030295 ETH</span></div>
+    <br>
+    <div><span class="label">INPUT DATA:   </span> <span class="hash">0xd0e30db0</span> <span style="color:#777">(deposit() function selector)</span></div>
+    <div><span class="label">CHAIN ID:     </span> <span class="value">1337 (Ganache Local)</span></div>
+    <br>
+    <div><span class="label">EVENT EMITTED:</span> <span class="value">Deposited(sender, amount=5 ETH, contractBalance=7 ETH)</span></div>
+    <br>
+    <div><span class="separator">================================================================</span></div>
+  </div>
+</div>
+
+<!-- SCREENSHOT 3: Contract Balance -->
+<div class="section-label">Screenshot 3 - Current Smart Contract Balance</div>
+<div class="terminal-window" id="screenshot3">
+  <div class="terminal-titlebar">
+    <span class="dot dot-red"></span>
+    <span class="dot dot-yellow"></span>
+    <span class="dot dot-green"></span>
+    <span class="terminal-title">PowerShell - Contract Balance | Student: Seif Sid Ali Maloufi</span>
+  </div>
+  <div class="terminal-body">
+    <div><span class="prompt">PS C:\Users\Anigma PC\Desktop\project-blockchain\workshop4&gt;</span> <span class="cmd">npx hardhat run scripts/balance.js --network ganache</span></div>
+    <br>
+    <div><span class="separator">============================================================</span></div>
+    <div>  <span class="label">Workshop 4 - MDT915 Blockchain Technology</span></div>
+    <div>  <span class="label">Student:</span> <span class="highlight">Seif Sid Ali Maloufi</span></div>
+    <div><span class="separator">============================================================</span></div>
+    <div>  <span class="label">Contract:</span> <span class="hash">0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab</span></div>
+    <div>  <span class="label">Current Balance:</span> <span class="highlight">6.0 ETH</span></div>
+    <div>  <span class="label">Current Balance (wei):</span> <span class="value">6000000000000000000 wei</span></div>
+    <div><span class="separator">============================================================</span></div>
+    <br>
+    <div style="color: #777; font-size: 12px;">
+      &nbsp;&nbsp;Transaction summary:<br>
+      &nbsp;&nbsp;  [Block 2] Account 0 deposited 2 ETH<br>
+      &nbsp;&nbsp;  [Block 3] Account 1 deposited 5 ETH<br>
+      &nbsp;&nbsp;  [Block 4] Account 2 deposited 3 ETH<br>
+      &nbsp;&nbsp;  [Block 5] Account 0 withdrew  4 ETH<br>
+      &nbsp;&nbsp;  ----------------------------------------<br>
+      &nbsp;&nbsp;  Net contract balance: 2 + 5 + 3 - 4 = <span class="highlight">6 ETH</span>
+    </div>
+    <br>
+    <div><span class="prompt">PS C:\Users\Anigma PC\Desktop\project-blockchain\workshop4&gt;</span> <span style="color:#777">_</span></div>
+  </div>
+</div>
+
+</body>
+</html>

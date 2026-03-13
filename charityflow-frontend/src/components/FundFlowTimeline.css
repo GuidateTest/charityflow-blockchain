@@ -1,0 +1,108 @@
+.fund-flow-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.flow-step:last-child {
+  padding-bottom: 0;
+}
+
+.flow-connector {
+  position: absolute;
+  left: 18px;
+  top: 36px;
+  width: 2px;
+  height: calc(100% - 18px);
+  background: var(--cf-border);
+  border-radius: 1px;
+}
+
+.flow-connector.done {
+  background: linear-gradient(180deg, var(--cf-teal-1), var(--cf-teal-2));
+}
+
+.flow-node {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--cf-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cf-bg-light);
+  color: var(--cf-text-muted);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.flow-node.done {
+  border-color: var(--cf-teal-1);
+  background: rgba(0, 194, 168, 0.12);
+  color: var(--cf-teal-1);
+  box-shadow: 0 0 12px rgba(0, 194, 168, 0.25);
+}
+
+.flow-node.current {
+  border-color: var(--cf-teal-2);
+  background: rgba(56, 249, 215, 0.1);
+  color: var(--cf-teal-2);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(56, 249, 215, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(56, 249, 215, 0.5); }
+}
+
+.flow-content {
+  flex: 1;
+  padding-top: 7px;
+}
+
+.flow-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cf-text);
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.flow-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: rgba(0, 194, 168, 0.05);
+  border: 1px solid rgba(0, 194, 168, 0.12);
+  border-radius: 10px;
+}
+
+.flow-tx-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--cf-teal-1);
+  font-size: 12px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.flow-tx-link:hover {
+  color: var(--cf-teal-2);
+}

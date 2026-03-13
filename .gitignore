@@ -1,0 +1,41 @@
+# Environment (NEVER commit secrets)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+cache/
+artifacts/
+typechain-types/
+coverage/
+
+# Hardhat
+charityflow-hardhat/cache/
+charityflow-hardhat/artifacts/
+charityflow-hardhat/typechain-types/
+charityflow-hardhat/coverage/
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Puppeteer (if used)
+node_modules/puppeteer/

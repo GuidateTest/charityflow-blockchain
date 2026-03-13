@@ -1,0 +1,183 @@
+.campaign-detail {
+  padding-top: 32px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--cf-text-muted);
+  font-size: 14px;
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--cf-teal-1);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 32px;
+  align-items: start;
+}
+
+.campaign-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: var(--cf-surface);
+  border: 1px solid var(--cf-border);
+  border-radius: var(--r-card);
+}
+
+[data-theme="dark"] .campaign-stats-row {
+  backdrop-filter: blur(20px);
+}
+
+.campaign-stat {
+  text-align: center;
+}
+
+.campaign-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.detail-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--cf-border);
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.detail-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cf-text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.detail-tab:hover {
+  color: var(--cf-text);
+}
+
+.detail-tab.active {
+  color: var(--cf-teal-1);
+  border-bottom-color: var(--cf-teal-1);
+}
+
+.tab-content {
+  animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Proof cards */
+.proof-card {
+  cursor: default;
+}
+
+.proof-card:hover {
+  transform: none;
+}
+
+.proof-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.proof-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--cf-border);
+}
+
+/* Sidebar */
+.donate-card {
+  position: sticky;
+  top: 84px;
+}
+
+.amount-input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.amount-presets {
+  display: flex;
+  gap: 6px;
+}
+
+.amount-preset {
+  flex: 1;
+  padding: 6px 4px;
+  border: 1.5px solid var(--cf-border);
+  border-radius: 8px;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cf-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-mono);
+}
+
+.amount-preset:hover {
+  border-color: var(--cf-teal-1);
+  color: var(--cf-teal-1);
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+@media (max-width: 1024px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .donate-card {
+    position: static;
+    order: -1;
+  }
+
+  .campaign-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .campaign-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

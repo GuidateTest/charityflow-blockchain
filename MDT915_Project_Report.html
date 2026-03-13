@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDT915 — CharityFlow Project Report</title>
+  <style>
+    @page { margin: 2cm; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 11pt;
+      line-height: 1.5;
+      color: #222;
+      max-width: 21cm;
+      margin: 0 auto;
+      padding: 1.5cm 2cm;
+      background: #fff;
+    }
+    .cover {
+      text-align: center;
+      padding: 2cm 0 3cm;
+      border-bottom: 2px solid #1a365d;
+      margin-bottom: 2cm;
+    }
+    .logo {
+      max-width: 280px;
+      height: auto;
+      margin-bottom: 1.5cm;
+    }
+    .cover h1 {
+      font-size: 18pt;
+      font-weight: bold;
+      color: #1a365d;
+      margin: 0.5em 0;
+    }
+    .cover .subtitle {
+      font-size: 14pt;
+      color: #2d3748;
+      margin-bottom: 1em;
+    }
+    .cover .meta {
+      font-size: 10pt;
+      color: #4a5568;
+      margin-top: 1.5em;
+    }
+    h1, h2, h3 { color: #1a365d; font-weight: bold; }
+    h1 { font-size: 14pt; margin-top: 1.5em; margin-bottom: 0.5em; }
+    h2 { font-size: 12pt; margin-top: 1.2em; margin-bottom: 0.4em; }
+    h3 { font-size: 11pt; margin-top: 1em; margin-bottom: 0.3em; }
+    p { margin: 0.5em 0; text-align: justify; }
+    ul, ol { margin: 0.5em 0; padding-left: 1.5em; }
+    li { margin: 0.25em 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.8em 0;
+      font-size: 10pt;
+    }
+    th, td {
+      border: 1px solid #cbd5e0;
+      padding: 6px 10px;
+      text-align: left;
+    }
+    th { background: #edf2f7; font-weight: bold; color: #1a365d; }
+    pre, code {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 9pt;
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 0.2em 0.4em;
+    }
+    pre {
+      padding: 10px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .architecture-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 9pt;
+      line-height: 1.4;
+      margin: 0.8em 0;
+    }
+    .footer-note {
+      margin-top: 2cm;
+      padding-top: 1cm;
+      border-top: 1px solid #e2e8f0;
+      font-size: 10pt;
+      color: #718096;
+      text-align: center;
+    }
+    @media print {
+      body { padding: 0; }
+      .cover { page-break-after: avoid; }
+      h1, h2, h3 { page-break-after: avoid; }
+      pre, table { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <img src="UOWD_logo-1.png" alt="University of Wollongong in Dubai" class="logo">
+  <h1>MDT915 — BLOCKCHAIN IMPLEMENTATION PROJECT</h1>
+  <p class="subtitle">CharityFlow: Transparent Charity Donation Platform</p>
+  <p class="meta">
+    <strong>Course:</strong> MDT915 Blockchain Practitioner<br>
+    <strong>Weight:</strong> 30% of final grade<br>
+    <strong>Type:</strong> Group Project (2 students)<br>
+    <strong>Due Date:</strong> Session 6 — March 14, 2026, 1:00 PM
+  </p>
+</div>
+
+<h1>Team Members</h1>
+<table>
+  <tr><th>Name</th><th>Student ID</th><th>Role</th></tr>
+  <tr><td>Seif Sid Ali Maloufi</td><td>[Your ID]</td><td>Developer (Smart Contracts, Frontend, Web3, IPFS)</td></tr>
+  <tr><td>Jyldyz Sulaimanova</td><td>[Your ID]</td><td>Report & Theory (Documentation, Research, Academic Writing)</td></tr>
+</table>
+
+<h1>1. Executive Summary</h1>
+<p>CharityFlow is a decentralized application (DApp) that addresses the lack of transparency in charitable donations. Donors can track exactly how their contributions are used through an immutable blockchain ledger. Charities create campaigns, receive donations in cryptocurrency (ETH), and must declare withdrawals with proof before accessing funds. Every transaction—donations, withdrawals, proof submissions, and impact reports—is recorded on-chain and visible to all stakeholders.</p>
+<p>The system is deployed on <strong>Sepolia testnet</strong> and supports both local Hardhat development and live testnet transactions. Key features include IPFS integration for document uploads, real-time on-chain activity logs, multi-network support (Hardhat + Sepolia), and a responsive React frontend.</p>
+
+<h1>2. Problem Statement</h1>
+<p>Traditional charity platforms suffer from:</p>
+<ul>
+  <li><strong>Opacity:</strong> Donors cannot verify how their money is spent.</li>
+  <li><strong>Trust issues:</strong> Charities may misuse funds without accountability.</li>
+  <li><strong>Centralization:</strong> Intermediaries control funds and charge high fees.</li>
+  <li><strong>Lack of proof:</strong> Impact claims are often unverifiable.</li>
+</ul>
+<p>CharityFlow solves these by recording every donation, withdrawal, and proof of work on the Ethereum blockchain, making charity fully transparent and auditable.</p>
+
+<h1>3. Solution Design</h1>
+<h2>3.1 Domain Choice</h2>
+<p>We selected <strong>Option 2: Transparent Charity Donation Platform</strong> from the assignment, implementing all required features:</p>
+<ul>
+  <li>Donation campaigns creation by charities</li>
+  <li>Donor contributions in cryptocurrency (ETH)</li>
+  <li>Transparent fund tracking (donors see where money goes)</li>
+  <li>Impact reporting (charities upload proof of work via IPFS)</li>
+</ul>
+
+<h2>3.2 Architecture Overview</h2>
+<div class="architecture-box">
+┌─────────────────────────────────────────────────────────────────────────┐<br>
+│                         CharityFlow DApp                                 │<br>
+├──────────────────────┬──────────────────────────────────────────────────┤<br>
+│  Frontend (React)    │  Landing, Campaigns, Donor Dashboard,            │<br>
+│  Vite + Ethers.js    │  Charity Portal, Campaign Detail                  │<br>
+├──────────────────────┼──────────────────────────────────────────────────┤<br>
+│  Web3 Layer         │  MetaMask → BrowserProvider → Signer → Contract    │<br>
+│  Ethers.js v6        │  Multi-network: Hardhat (31337) / Sepolia (11155111)│<br>
+├──────────────────────┼──────────────────────────────────────────────────┤<br>
+│  Smart Contract      │  CharityDonation.sol (Solidity 0.8.20)            │<br>
+│  CharityDonation     │  Campaigns, Donations, Proofs, Withdrawals, Reports│<br>
+├──────────────────────┼──────────────────────────────────────────────────┤<br>
+│  Storage             │  IPFS (Pinata) for images, receipts, proofs       │<br>
+├──────────────────────┼──────────────────────────────────────────────────┤<br>
+│  Blockchain          │  Hardhat Local / Sepolia Testnet                  │<br>
+│  Ethereum            │  Chain ID: 31337 (local) / 11155111 (Sepolia)     │<br>
+└──────────────────────┴──────────────────────────────────────────────────┘
+</div>
+
+<h2>3.3 Data Flow</h2>
+<div class="architecture-box">
+Donor → MetaMask → donate(campaignId, message) → CharityDonation Contract<br>
+                                    ↓<br>
+                  Funds held in contract escrow<br>
+                                    ↓<br>
+Charity → withdrawFunds(campaignId, amount, purpose, proofHash) → ETH sent<br>
+                                    ↓<br>
+Charity → submitProof(campaignId, title, description, fileHash, amountSpent)<br>
+                                    ↓<br>
+Charity → postImpactReport(campaignId, title, content, mediaHashes)<br>
+                                    ↓<br>
+Admin → verifyProof(proofId) / verifyCharity(address)
+</div>
+
+<h1>4. Implementation Details</h1>
+<h2>4.1 Smart Contract (CharityDonation.sol)</h2>
+<p><strong>Core structures:</strong> Campaign, Donation, ProofOfWork, WithdrawalRecord, ImpactReport</p>
+<p><strong>Key functions:</strong> createCampaign, donate, withdrawFunds, submitProof, postImpactReport, cancelCampaign, claimRefund. Admin: verifyCharity, verifyCampaign, verifyProof, withdrawPlatformFees.</p>
+<p><strong>Platform fee:</strong> 2% (200 basis points) on each donation.</p>
+
+<h2>4.2 Frontend Features</h2>
+<p>Landing page, campaign list (search, filter, sort), campaign detail with donation form, donor dashboard with on-chain activity log, charity portal (create campaigns, withdraw, submit proofs, impact reports), IPFS upload via Pinata, multi-network support.</p>
+
+<h2>4.3 IPFS Integration</h2>
+<p>Pinata API for file uploads. Campaign cover images, proof documents, withdrawal receipts, impact report media. Gateway: https://gateway.pinata.cloud/ipfs/{cid}</p>
+
+<h1>5. Technologies Used</h1>
+<table>
+  <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+  <tr><td>Blockchain</td><td>Ethereum (Hardhat / Sepolia)</td><td>Immutable ledger</td></tr>
+  <tr><td>Smart Contracts</td><td>Solidity 0.8.20</td><td>Business logic</td></tr>
+  <tr><td>Development</td><td>Hardhat 2.22.x</td><td>Compile, test, deploy</td></tr>
+  <tr><td>Testing</td><td>Mocha + Chai</td><td>41 unit tests</td></tr>
+  <tr><td>Frontend</td><td>React 19 + Vite 4</td><td>UI</td></tr>
+  <tr><td>Web3</td><td>Ethers.js v6</td><td>Blockchain interaction</td></tr>
+  <tr><td>Wallet</td><td>MetaMask</td><td>User authentication</td></tr>
+  <tr><td>Storage</td><td>Pinata (IPFS)</td><td>Images, proofs, receipts</td></tr>
+</table>
+
+<h1>6. Prerequisites</h1>
+<ul>
+  <li>Node.js v18+ (v20 recommended)</li>
+  <li>npm 9+</li>
+  <li>MetaMask browser extension</li>
+  <li>Pinata account (free) for IPFS</li>
+  <li>Sepolia test ETH from faucet</li>
+</ul>
+
+<h1>7. Installation & Setup</h1>
+<h2>Local (Hardhat)</h2>
+<pre>cd charityflow-hardhat
+npm install
+npx hardhat compile
+npx hardhat test
+npx hardhat node          # Terminal 1
+npx hardhat run scripts/deploy.js --network localhost   # Terminal 2</pre>
+
+<h2>Sepolia Deployment</h2>
+<pre>cd charityflow-hardhat
+# Add to .env: PRIVATE_KEY, ALCHEMY_API_URL (eth-sepolia)
+npm run deploy:sepolia
+# Frontend .env is auto-updated with contract address</pre>
+
+<h2>Frontend</h2>
+<pre>cd charityflow-frontend
+npm install
+# Add VITE_PINATA_JWT to .env for IPFS uploads
+npm run dev</pre>
+<p>Open http://localhost:5173. Connect MetaMask on Sepolia or Hardhat local.</p>
+
+<h1>8. Smart Contract API</h1>
+<table>
+  <tr><th>Function</th><th>Access</th><th>Description</th></tr>
+  <tr><td>createCampaign(...)</td><td>Public</td><td>Create campaign</td></tr>
+  <tr><td>donate(campaignId, message)</td><td>Public (payable)</td><td>Donate ETH</td></tr>
+  <tr><td>withdrawFunds(...)</td><td>Charity</td><td>Withdraw with proof</td></tr>
+  <tr><td>submitProof(...)</td><td>Charity</td><td>Upload proof</td></tr>
+  <tr><td>postImpactReport(...)</td><td>Charity</td><td>Post impact update</td></tr>
+  <tr><td>cancelCampaign(campaignId)</td><td>Charity/Admin</td><td>Cancel campaign</td></tr>
+  <tr><td>claimRefund(donationId)</td><td>Donor</td><td>Refund on cancelled campaign</td></tr>
+  <tr><td>verifyCharity(address)</td><td>Admin</td><td>Verify charity</td></tr>
+  <tr><td>verifyProof(proofId)</td><td>Admin</td><td>Verify proof</td></tr>
+</table>
+
+<h1>9. User Guide</h1>
+<p><strong>Donor:</strong> Connect MetaMask → Browse campaigns → Donate → Track via Fund Flow timeline and activity log.</p>
+<p><strong>Charity:</strong> Connect MetaMask → Charity Portal → Create Campaign (upload IPFS image) → Withdraw, Submit Proof, Post Impact Report.</p>
+<p><strong>Admin:</strong> Deployer address. Use Hardhat console or Remix for verifyCharity, verifyProof, withdrawPlatformFees.</p>
+
+<h1>10. Testing</h1>
+<pre>cd charityflow-hardhat
+npx hardhat test</pre>
+<p><strong>41 unit tests</strong> across: Deployment, Campaign Creation, Donations, Proof of Work, Withdrawals, Refunds, Impact Reports, Admin Functions, Deadline Enforcement.</p>
+
+<h1>11. Deployment (Sepolia)</h1>
+<p><strong>Contract address:</strong> 0xE9635eEE0b6EFeB423e9B7aE789C62DB41805F1d</p>
+<p><strong>Block:</strong> 10439368</p>
+<p><strong>Explorer:</strong> <a href="https://sepolia.etherscan.io/address/0xE9635eEE0b6EFeB423e9B7aE789C62DB41805F1d">sepolia.etherscan.io</a></p>
+
+<h1>12. Known Issues & Limitations</h1>
+<ol>
+  <li>MetaMask only — No WalletConnect</li>
+  <li>No pagination — Campaign list loads all</li>
+  <li>Admin UI — Verification via console/Remix only</li>
+  <li>Node version — Some packages prefer Node 20+</li>
+</ol>
+
+<h1>13. Future Improvements</h1>
+<ol>
+  <li>The Graph subgraph for event indexing</li>
+  <li>Multi-token donations (USDC, DAI)</li>
+  <li>WalletConnect for mobile</li>
+  <li>DAO governance for charity verification</li>
+  <li>Mainnet deployment</li>
+</ol>
+
+<h1>14. Learning Outcomes Addressed</h1>
+<ul>
+  <li><strong>LO2:</strong> Analyzed blockchain use case (charity transparency)</li>
+  <li><strong>LO3:</strong> Applied Ethereum architecture (Hardhat, Solidity, Ethers.js)</li>
+  <li><strong>LO4:</strong> Implemented smart contracts, transaction validation, events, on-chain ledger</li>
+</ul>
+
+<h1>15. References</h1>
+<ul>
+  <li>CryptoZombies, Hardhat Tutorial, Ethers.js Documentation</li>
+  <li>MetaMask Developer Docs, Pinata IPFS, Sepolia Faucet</li>
+</ul>
+
+<div class="footer-note">
+  CharityFlow — Every donation, fully traceable. MDT915 Blockchain Practitioner Course.<br>
+  University of Wollongong in Dubai
+</div>
+
+<!-- To save as PDF: Press Ctrl+P (or Cmd+P on Mac) → Destination: "Save as PDF" → Save -->
+
+</body>
+</html>

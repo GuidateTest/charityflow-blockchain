@@ -1,0 +1,213 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  /* Always dark — the logo was designed for a dark background */
+  background: rgba(5, 8, 16, 0.92);
+  border-bottom: 1px solid rgba(0, 194, 168, 0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 1px 24px rgba(0, 0, 0, 0.4);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  gap: 32px;
+}
+
+.navbar-logo {
+  text-decoration: none;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  padding: 4px;
+  transition: box-shadow 0.2s ease;
+}
+
+.navbar-logo:hover {
+  box-shadow: 0 0 0 2px rgba(0, 194, 168, 0.35);
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.navbar-link {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  /* Always light text — navbar is always dark */
+  color: rgba(229, 231, 235, 0.65);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: #E5E7EB;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.navbar-link.active {
+  color: var(--cf-teal-2);
+  background: rgba(0, 194, 168, 0.12);
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(229, 231, 235, 0.6);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+  border-color: var(--cf-teal-1);
+  color: var(--cf-teal-2);
+  background: rgba(0, 194, 168, 0.10);
+}
+
+/* Account dropdown */
+.account-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.account-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  font-size: 13px;
+  color: #E5E7EB;
+  background: rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+
+.account-btn:hover {
+  border-color: var(--cf-teal-1);
+  background: rgba(0, 194, 168, 0.08);
+}
+
+.account-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cf-teal-2);
+  box-shadow: 0 0 6px var(--cf-teal-2);
+}
+
+.account-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 240px;
+  background: var(--cf-surface);
+  border: 1px solid var(--cf-border);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  z-index: 200;
+}
+
+[data-theme="dark"] .account-menu {
+  backdrop-filter: blur(20px);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.account-menu-addr {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 4px 8px;
+}
+
+.account-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 9px;
+  font-size: 14px;
+  color: var(--cf-text);
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--font-body);
+  text-align: left;
+}
+
+.account-menu-item:hover {
+  background: rgba(0, 194, 168, 0.08);
+  color: var(--cf-teal-1);
+}
+
+.account-menu-item.danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+  color: #EF4444;
+}
+
+/* Mobile */
+.mobile-menu-btn {
+  display: none;
+}
+
+.mobile-menu {
+  display: none;
+  padding: 16px 0 20px;
+  border-top: 1px solid rgba(0, 194, 168, 0.12);
+}
+
+.mobile-menu-link {
+  display: block;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(229, 231, 235, 0.65);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  transition: color 0.2s ease;
+}
+
+.mobile-menu-link.active,
+.mobile-menu-link:hover {
+  color: var(--cf-teal-2);
+}
+
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+}
