@@ -43,8 +43,6 @@ node_modules/puppeteer/
 # Not for repo
 workshop4/
 MDT915_Project_Assignment.docx
-MDT915_Project_Report.html
-MDT915_Project_Report.md
 MDT915_Individual_Contribution_*.md
 GITHUB_PUSH_INSTRUCTIONS.md
 generate-report-pdf.js
