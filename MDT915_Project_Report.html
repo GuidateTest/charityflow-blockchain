@@ -94,11 +94,13 @@
       color: #718096;
       text-align: center;
     }
+    .screenshot { max-width: 100%; height: auto; border: 1px solid #e2e8f0; border-radius: 4px; }
     @media print {
       body { padding: 0; }
       .cover { page-break-after: avoid; }
       h1, h2, h3 { page-break-after: avoid; }
       pre, table { page-break-inside: avoid; }
+      img { max-width: 100% !important; page-break-inside: avoid; }
     }
   </style>
 </head>
@@ -112,7 +114,8 @@
     <strong>Course:</strong> MDT915 Blockchain Practitioner<br>
     <strong>Weight:</strong> 30% of final grade<br>
     <strong>Type:</strong> Group Project (2 students)<br>
-    <strong>Due Date:</strong> Session 6 — March 14, 2026, 1:00 PM
+    <strong>Due Date:</strong> Session 6 — March 14, 2026, 1:00 PM<br>
+    <strong>Repository:</strong> <a href="https://github.com/GuidateTest/charityflow-blockchain">github.com/GuidateTest/charityflow-blockchain</a>
   </p>
 </div>
 
@@ -191,6 +194,18 @@ Admin → verifyProof(proofId) / verifyCharity(address)
 
 <h2>4.2 Frontend Features</h2>
 <p>Landing page, campaign list (search, filter, sort), campaign detail with donation form, donor dashboard with on-chain activity log, charity portal (create campaigns, withdraw, submit proofs, impact reports), IPFS upload via Pinata, multi-network support.</p>
+
+<h3>Application Screenshots</h3>
+<p><strong>Figure 1 — Landing Page:</strong> Hero section with feature highlights and call-to-action.</p>
+<p><img src="assets/landing-page.png" alt="Landing page" style="max-width:100%; height:auto; border:1px solid #e2e8f0; border-radius:4px;"></p>
+<p><strong>Figure 2 — Campaign List:</strong> Browse campaigns with search, filter, and sort.</p>
+<p><img src="assets/campaign.png" alt="Campaign list" style="max-width:100%; height:auto; border:1px solid #e2e8f0; border-radius:4px;"></p>
+<p><strong>Figure 3 — Campaign Detail:</strong> Full campaign info, progress bar, donation form, and Fund Flow.</p>
+<p><img src="assets/campaign_view.png" alt="Campaign detail" style="max-width:100%; height:auto; border:1px solid #e2e8f0; border-radius:4px;"></p>
+<p><strong>Figure 4 — Donor Dashboard:</strong> My donations with on-chain activity log.</p>
+<p><img src="assets/donations.png" alt="Donor dashboard" style="max-width:100%; height:auto; border:1px solid #e2e8f0; border-radius:4px;"></p>
+<p><strong>Figure 5 — Charity Portal:</strong> Create and manage campaigns.</p>
+<p><img src="assets/charityportal.png" alt="Charity portal" style="max-width:100%; height:auto; border:1px solid #e2e8f0; border-radius:4px;"></p>
 
 <h2>4.3 IPFS Integration</h2>
 <p>Pinata API for file uploads. Campaign cover images, proof documents, withdrawal receipts, impact report media. Gateway: https://gateway.pinata.cloud/ipfs/{cid}</p>
@@ -299,11 +314,8 @@ npx hardhat test</pre>
 </ul>
 
 <div class="footer-note">
-  CharityFlow — Every donation, fully traceable. MDT915 Blockchain Practitioner Course.<br>
-  University of Wollongong in Dubai
+  CharityFlow — MDT915 Blockchain Practitioner Course. University of Wollongong in Dubai.
 </div>
-
-<!-- To save as PDF: Press Ctrl+P (or Cmd+P on Mac) → Destination: "Save as PDF" → Save -->
 
 </body>
 </html>

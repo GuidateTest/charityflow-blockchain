@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDT915 — Individual Contribution Report — Seif Sid Ali Maloufi</title>
+  <style>
+    @page { margin: 2cm; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 11pt;
+      line-height: 1.5;
+      color: #222;
+      max-width: 21cm;
+      margin: 0 auto;
+      padding: 1.5cm 2cm;
+      background: #fff;
+    }
+    .cover {
+      text-align: center;
+      padding: 1.5cm 0 2cm;
+      border-bottom: 2px solid #1a365d;
+      margin-bottom: 1.5cm;
+    }
+    .cover h1 { font-size: 16pt; color: #1a365d; margin: 0.5em 0; }
+    .cover .meta { font-size: 10pt; color: #4a5568; margin-top: 0.5em; }
+    h1, h2, h3 { color: #1a365d; font-weight: bold; }
+    h1 { font-size: 14pt; margin-top: 1.2em; margin-bottom: 0.4em; }
+    h2 { font-size: 12pt; margin-top: 1em; margin-bottom: 0.3em; }
+    h3 { font-size: 11pt; margin-top: 0.8em; margin-bottom: 0.25em; }
+    p, li { margin: 0.4em 0; text-align: justify; }
+    ul { margin: 0.4em 0; padding-left: 1.5em; }
+    table { width: 100%; border-collapse: collapse; margin: 0.6em 0; font-size: 10pt; }
+    th, td { border: 1px solid #cbd5e0; padding: 5px 8px; text-align: left; }
+    th { background: #edf2f7; font-weight: bold; color: #1a365d; }
+    .footer-note { margin-top: 1.5cm; padding-top: 0.8cm; border-top: 1px solid #e2e8f0; font-size: 10pt; color: #718096; text-align: center; }
+    @media print { h1, h2, h3 { page-break-after: avoid; } table { page-break-inside: avoid; } }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>MDT915 — Individual Contribution Report</h1>
+  <p class="meta">
+    <strong>Student Name:</strong> Seif Sid Ali Maloufi<br>
+    <strong>Student ID:</strong> 8718179<br>
+    <strong>Project:</strong> CharityFlow — Transparent Charity Donation Platform<br>
+    <strong>Course:</strong> MDT915 Blockchain Practitioner
+  </p>
+</div>
+
+<h1>1. My Specific Contributions</h1>
+
+<h2>Smart Contract Development</h2>
+<ul>
+  <li>Designed and implemented the <code>CharityDonation.sol</code> smart contract in Solidity 0.8.20.</li>
+  <li>Defined core data structures: Campaign, Donation, ProofOfWork, WithdrawalRecord, ImpactReport.</li>
+  <li>Implemented full campaign lifecycle: creation, donation (with 2% platform fee), withdrawal with mandatory proof hash, proof submission, and impact reporting.</li>
+  <li>Added platform fee mechanism (200 basis points) and admin functions for charity, campaign, and proof verification.</li>
+  <li>Implemented refund logic for cancelled campaigns and deadline enforcement.</li>
+  <li>Used events for frontend integration and activity feeds.</li>
+</ul>
+
+<h2>Frontend & Web3 Integration</h2>
+<ul>
+  <li>Built the React application using Vite, React Router, and Ethers.js v6.</li>
+  <li>Implemented all pages: Landing, Campaign List, Campaign Detail, Donor Dashboard, Charity Portal.</li>
+  <li>Created <code>contract.js</code> with multi-network support (Hardhat local + Sepolia).</li>
+  <li>Integrated Web3Context for MetaMask connection and contract instance creation.</li>
+  <li>Implemented real on-chain activity feeds in Donor and Charity dashboards.</li>
+  <li>Added network switch UI in Navbar when user is on the wrong network.</li>
+</ul>
+
+<h2>IPFS Integration</h2>
+<ul>
+  <li>Integrated Pinata API in <code>ipfs.js</code> (<code>uploadToIPFS</code>, <code>ipfsUrl</code>).</li>
+  <li>Created IPFSUpload component for single and multiple file uploads.</li>
+  <li>Wired IPFS into campaign cover images, proof documents, withdrawal receipts, and impact report media.</li>
+</ul>
+
+<h2>Testing & Quality Assurance</h2>
+<ul>
+  <li>Wrote 41 unit tests using Mocha, Chai, and Hardhat Network Helpers.</li>
+  <li>Covered deployment, campaign creation, donations, proofs, withdrawals, refunds, impact reports, admin functions, and deadline enforcement.</li>
+</ul>
+
+<h2>Deployment & Configuration</h2>
+<ul>
+  <li>Configured Hardhat for local development and Sepolia deployment.</li>
+  <li>Deployed contract to Sepolia testnet.</li>
+  <li>Set up deploy script to auto-update frontend .env with contract address.</li>
+</ul>
+
+<h1>2. Time Investment</h1>
+<table>
+  <tr><th>Activity</th><th>Estimated Hours</th></tr>
+  <tr><td>Smart contract design & implementation</td><td>12</td></tr>
+  <tr><td>Unit testing</td><td>6</td></tr>
+  <tr><td>Frontend structure & pages</td><td>10</td></tr>
+  <tr><td>Web3/Ethers.js integration</td><td>6</td></tr>
+  <tr><td>IPFS/Pinata integration</td><td>4</td></tr>
+  <tr><td>Hardhat configuration & deployment</td><td>3</td></tr>
+  <tr><td>Documentation & README</td><td>4</td></tr>
+  <tr><td>Debugging & refinement</td><td>5</td></tr>
+  <tr><th>Total</th><th>50</th></tr>
+</table>
+
+<h1>3. Challenges & Solutions</h1>
+<table>
+  <tr><th>Challenge</th><th>Solution</th></tr>
+  <tr><td>Ensuring withdrawals require proof of spending</td><td>Implemented proofHash parameter in withdrawFunds() and linked it to WithdrawalRecord so every withdrawal is traceable on-chain.</td></tr>
+  <tr><td>Contract address per network</td><td>Created CONTRACT_BY_CHAIN map in contract.js and passed chainId from Web3Context to getContract().</td></tr>
+  <tr><td>Empty activity feed on Sepolia</td><td>Updated .env with Sepolia deployment address and ensured deploy script auto-updates it.</td></tr>
+  <tr><td>Manual IPFS hash entry</td><td>Integrated Pinata API and built IPFSUpload component so users upload files directly.</td></tr>
+  <tr><td>Node version compatibility</td><td>Documented in README and used Node 20 for deployment where possible.</td></tr>
+</table>
+
+<h1>4. Learning Outcomes</h1>
+<ul>
+  <li>Gained hands-on experience with Solidity smart contract development.</li>
+  <li>Understood gas considerations and event emission for frontend integration.</li>
+  <li>Learned Hardhat workflow: compile, test, deploy to local and Sepolia testnet.</li>
+  <li>Applied blockchain concepts: escrow, verification, immutable ledger.</li>
+  <li>Practiced Ethers.js v6 for connecting React to Ethereum.</li>
+  <li>Integrated IPFS via Pinata for decentralized storage.</li>
+</ul>
+
+<h1>5. Team Collaboration</h1>
+<ul>
+  <li>Jyldyz handled report writing, documentation, and academic theory; I focused on implementation.</li>
+  <li>Shared contract ABI and event names so the report could accurately describe the system.</li>
+  <li>Coordinated on project structure and README content for clarity.</li>
+  <li>Reviewed each other's work before submission.</li>
+</ul>
+
+<div class="footer-note">
+  Date: 14/03/2026
+</div>
+
+</body>
+</html>

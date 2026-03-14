@@ -6,6 +6,7 @@
 **Weight:** 30% of final grade  
 **Type:** Group Project (2 students)  
 **Due Date:** Session 6 — March 14, 2026, 1:00 PM  
+**Repository:** https://github.com/GuidateTest/charityflow-blockchain  
 
 ---
 
@@ -117,6 +118,31 @@ Admin → verifyProof(proofId) / verifyCharity(address)
 - **Charity portal:** Create campaigns, manage campaigns, withdraw, submit proofs, post impact reports, **real on-chain activity log**
 - **IPFS upload:** Direct image/document upload via Pinata; hash auto-filled on forms
 - **Multi-network:** Auto-detects Hardhat or Sepolia; uses correct contract per network
+
+**Application Screenshots:**
+
+| Figure | Description |
+|--------|-------------|
+| 1 | Landing page — Hero section with feature highlights |
+| 2 | Campaign list — Browse campaigns with search, filter, sort |
+| 3 | Campaign detail — Full info, progress bar, donation form, Fund Flow |
+| 4 | Donor dashboard — My donations with on-chain activity log |
+| 5 | Charity portal — Create and manage campaigns |
+
+![Landing page](assets/landing-page.png)
+*Figure 1 — Landing Page*
+
+![Campaign list](assets/campaign.png)
+*Figure 2 — Campaign List*
+
+![Campaign detail](assets/campaign_view.png)
+*Figure 3 — Campaign Detail*
+
+![Donor dashboard](assets/donations.png)
+*Figure 4 — Donor Dashboard*
+
+![Charity portal](assets/charityportal.png)
+*Figure 5 — Charity Portal*
 
 ### 4.3 IPFS Integration
 
@@ -313,4 +339,4 @@ project-blockchain/
 
 ---
 
-*CharityFlow — Every donation, fully traceable. MDT915 Blockchain Practitioner Course.*
+*CharityFlow — MDT915 Blockchain Practitioner Course. University of Wollongong in Dubai.*
