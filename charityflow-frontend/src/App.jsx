@@ -7,6 +7,7 @@ import CampaignList from "./pages/CampaignList";
 import CampaignDetail from "./pages/CampaignDetail";
 import DonorDashboard from "./pages/DonorDashboard";
 import CharityDashboard from "./pages/CharityDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import "./App.css";
 
 function Footer() {
@@ -49,6 +50,7 @@ export default function App() {
               <Route path="/campaigns/:id" element={<CampaignDetail />} />
               <Route path="/donor" element={<DonorDashboard />} />
               <Route path="/charity" element={<CharityDashboard />} />
+              <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<Landing />} />
             </Routes>
           </main>

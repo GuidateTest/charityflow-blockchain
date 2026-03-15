@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Sun, Moon, Menu, X, Wallet, ChevronDown, LogOut } from "lucide-react";
+import { Sun, Moon, Menu, X, Wallet, ChevronDown, LogOut, Shield } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import { useWeb3 } from "../context/Web3Context";
 import { LogoFull } from "./Logo";
@@ -17,6 +17,7 @@ export default function Navbar() {
     isCorrectNetwork,
     switchNetwork,
     networkName,
+    isAdmin,
   } = useWeb3();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,6 +27,7 @@ export default function Navbar() {
     { to: "/campaigns", label: "Campaigns" },
     { to: "/donor", label: "My Donations" },
     { to: "/charity", label: "Charity Portal" },
+    ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
 
   return (
@@ -82,6 +84,11 @@ export default function Navbar() {
                   <Link to="/charity" className="account-menu-item" onClick={() => setAccountOpen(false)}>
                     Charity Portal
                   </Link>
+                  {isAdmin && (
+                    <Link to="/admin" className="account-menu-item" onClick={() => setAccountOpen(false)}>
+                      <Shield size={14} /> Admin
+                    </Link>
+                  )}
                   <div className="divider" style={{ margin: "8px 0" }} />
                   <button className="account-menu-item danger" onClick={disconnect}>
                     <LogOut size={14} /> Disconnect

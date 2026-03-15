@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWC-106 Final Report | Lab 7 DApp Security</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 700px; margin: 2rem auto; padding: 1.5rem; line-height: 1.6; }
+        h1 { font-size: 1.4rem; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem; }
+        h2 { font-size: 1.1rem; margin-top: 1.5rem; color: #2563eb; }
+        table { border-collapse: collapse; width: 100%; font-size: 0.9rem; margin: 0.75rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
+        th { background: #f3f4f6; }
+        .danger { color: #dc2626; }
+        .success { color: #16a34a; }
+        .box { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 1rem; margin: 0.75rem 0; }
+        code { background: #f3f4f6; padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }
+        img { max-width: 100%; border-radius: 6px; margin: 0.5rem 0; }
+        footer { margin-top: 2rem; font-size: 0.85rem; color: #6b7280; }
+    </style>
+</head>
+<body>
+
+<h1>SWC-106: Unprotected SELFDESTRUCT — Final Report</h1>
+<p><strong>Lab 7 DApp Security | MDT915</strong></p>
+
+<h2>1. Summary</h2>
+<p><strong>SWC-106</strong> = Unprotected <code>selfdestruct</code>. Anyone can destroy the contract and steal all ETH. <strong>Severity:</strong> High/Critical.</p>
+
+<table>
+    <tr><th>Attribute</th><th>Value</th></tr>
+    <tr><td>SWC ID</td><td>SWC-106</td></tr>
+    <tr><td>Title</td><td>Unprotected SELFDESTRUCT Instruction</td></tr>
+    <tr><td>CWE</td><td>CWE-284: Improper Access Control</td></tr>
+</table>
+
+<h2>2. Diagram</h2>
+<figure>
+    <img src="SWC-106_Attack_vs_Fix_Diagram.png" alt="Attack vs Fix" width="100%" />
+    <figcaption>Vulnerable vs Fixed contract flow</figcaption>
+</figure>
+
+<h2>3. Vulnerability vs Fix</h2>
+<table>
+    <tr><th>Aspect</th><th class="danger">Vulnerable</th><th class="success">Fixed</th></tr>
+    <tr><td>Who can destroy?</td><td>Anyone</td><td>Owner only</td></tr>
+    <tr><td>Access control</td><td>None</td><td><code>onlyOwner</code></td></tr>
+    <tr><td>Production safe?</td><td>❌ Never</td><td>✅ Yes</td></tr>
+</table>
+
+<h2>4. Code Fix</h2>
+<div class="box">
+    <strong>Vulnerable:</strong> <code>function destroy(address payable _to) external { selfdestruct(_to); }</code><br><br>
+    <strong>Fixed:</strong> <code>function destroy(address payable _to) external onlyOwner { selfdestruct(_to); }</code>
+</div>
+
+<h2>5. Remediation Checklist</h2>
+<ul>
+    <li>Add <code>onlyOwner</code> (or role-based access) to <code>selfdestruct</code></li>
+    <li>Use multisig for high-value contracts</li>
+    <li>Run Slither/Mythril to detect SWC-106</li>
+</ul>
+
+<h2>6. Key Takeaway</h2>
+<p>Always protect <code>selfdestruct</code> with access control. Real-world example: Parity wallet (~$300M frozen) due to unprotected init + kill.</p>
+
+<footer>Group A — SWC-106 | Lab 7 DApp Security | MDT915</footer>
+
+</body>
+</html>

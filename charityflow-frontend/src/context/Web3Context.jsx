@@ -20,6 +20,7 @@ export function Web3Provider({ children }) {
   const [signer, setSigner] = useState(null);
   const [contract, setContract] = useState(null);
   const [chainId, setChainId] = useState(null);
+  const [platformAdmin, setPlatformAdmin] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState(null);
 
@@ -63,20 +64,26 @@ export function Web3Provider({ children }) {
   }, [initContract]);
 
   const disconnect = useCallback(() => {
-    // Persist the user's intent to stay disconnected so auto-reconnect
-    // doesn't restore the session on the next page load.
     localStorage.setItem("cf-wallet-disconnected", "1");
     setAccount(null);
     setSigner(null);
     setProvider(null);
     setContract(null);
     setChainId(null);
-    // Fall back to read-only provider (Sepolia) so contract reads still work
+    setPlatformAdmin(null);
     try {
       const fallback = new ethers.JsonRpcProvider(READ_RPC_URL);
       initContract(fallback, 11155111);
     } catch (_) {}
   }, [initContract]);
+
+  useEffect(() => {
+    if (!contract) {
+      setPlatformAdmin(null);
+      return;
+    }
+    contract.platformAdmin().then(setPlatformAdmin).catch(() => setPlatformAdmin(null));
+  }, [contract]);
 
   // Always init read-only contract for Sepolia so campaigns load without wallet.
   // Auto-reconnect on page load if already authorized AND user hasn't disconnected.
@@ -168,6 +175,8 @@ export function Web3Provider({ children }) {
     }
   };
 
+  const isAdmin = account && platformAdmin && account.toLowerCase() === platformAdmin.toLowerCase();
+
   return (
     <Web3Context.Provider
       value={{
@@ -176,6 +185,8 @@ export function Web3Provider({ children }) {
         signer,
         contract,
         chainId,
+        platformAdmin,
+        isAdmin,
         isConnecting,
         error,
         isConnected: !!account,

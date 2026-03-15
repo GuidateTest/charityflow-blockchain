@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWC-106 Unprotected SELFDESTRUCT — Group A Lab Report | MDT915</title>
+    <style>
+        :root {
+            --bg: #0f1419;
+            --surface: #1a1f26;
+            --surface-alt: #252b33;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --danger: #f85149;
+            --success: #3fb950;
+            --warning: #d29922;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 2.5rem;
+        }
+        .report-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .report-header .meta { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem; }
+        h1 { font-size: 1.75rem; font-weight: 600; color: var(--text); margin: 0; }
+        h2 { font-size: 1.25rem; font-weight: 600; color: var(--accent); margin-top: 2.25rem; margin-bottom: 0.75rem; }
+        h3 { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-top: 1.5rem; }
+        code, pre {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.2em 0.45em;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        pre { padding: 1rem 1.25rem; overflow-x: auto; font-size: 0.875rem; line-height: 1.5; }
+        .diagram {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .diagram-figure {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .diagram-figure img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .diagram-figure figcaption {
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .danger { color: var(--danger); }
+        .success { color: var(--success); }
+        .warning { color: var(--warning); }
+        table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.95rem; }
+        th, td { border: 1px solid var(--border); padding: 0.6rem 1rem; text-align: left; }
+        th { background: var(--surface-alt); color: var(--accent); font-weight: 600; }
+        .box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin: 1.25rem 0; }
+        .report-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+<header class="report-header">
+    <h1>SWC-106: Unprotected SELFDESTRUCT Instruction</h1>
+    <p class="meta">Group A — Lab 7 DApp Security | MDT915</p>
+</header>
+
+<h2>1. What is SWC-106?</h2>
+<p><strong>SWC-106</strong> identifies smart contracts where the <code>selfdestruct</code> instruction can be called by <strong>anyone</strong> due to missing or insufficient access controls.</p>
+
+<table>
+    <tr><th>Attribute</th><th>Value</th></tr>
+    <tr><td>SWC ID</td><td>SWC-106</td></tr>
+    <tr><td>Title</td><td>Unprotected SELFDESTRUCT Instruction</td></tr>
+    <tr><td>CWE</td><td>CWE-284: Improper Access Control</td></tr>
+    <tr><td>Severity</td><td>High / Critical</td></tr>
+</table>
+
+<div class="box">
+    <strong>Definition (SWC Registry):</strong><br>
+    <em>"Due to missing or insufficient access controls, malicious parties can self-destruct the contract."</em>
+</div>
+
+<h2>2. Visual Diagram — Attack vs Fix</h2>
+<figure class="diagram-figure">
+    <img src="SWC-106_Attack_vs_Fix_Diagram.png" alt="SWC-106 Vulnerable vs Fixed Contract Flow" />
+    <figcaption>Figure 1: Attack vs Fix — Vulnerable (SWC-106) vs Fixed (Remediated) contract flows</figcaption>
+</figure>
+
+<h2>3. How SELFDESTRUCT Works</h2>
+<p>When <code>selfdestruct(address payable recipient)</code> is executed:</p>
+
+<div class="diagram">
+┌─────────────────────────────────────────────────────────────────────┐
+│              selfdestruct(address payable recipient)                 │
+├─────────────────────────────────────────────────────────────────────┤
+│  1. Sends ALL remaining ETH in contract → recipient                  │
+│  2. Marks contract storage as "destroyed"                            │
+│  3. Contract address becomes invalid — future calls revert           │
+│  4. IRREVERSIBLE — cannot be undone                                 │
+└─────────────────────────────────────────────────────────────────────┘
+</div>
+
+<h2>4. Attack Flow Diagram (Vulnerable Contract)</h2>
+
+<div class="diagram">
+                    VULNERABLE CONTRACT (SWC-106)
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                     │
+│   ┌─────────────┐     deposit()      ┌─────────────────────────┐     │
+│   │   User A    │ ───────────────►  │   Contract (holds ETH)  │     │
+│   └─────────────┘                   └───────────┬─────────────┘     │
+│                                                 │                   │
+│   ┌─────────────┐     destroy(attacker)         │                   │
+│   │  Attacker   │ ─────────────────────────────┼──► selfdestruct   │
+│   └─────────────┘     (NO CHECK!)               │         │         │
+│                                                 │         ▼         │
+│                                          All ETH ──► Attacker       │
+│                                          Contract destroyed         │
+└─────────────────────────────────────────────────────────────────────┘
+</div>
+
+<h2>5. Secure Flow Diagram (Fixed Contract)</h2>
+
+<div class="diagram">
+                    FIXED CONTRACT (SWC-106 Remediated)
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                     │
+│   ┌─────────────┐     deposit()      ┌─────────────────────────┐     │
+│   │   User A    │ ───────────────►  │   Contract (holds ETH)   │     │
+│   └─────────────┘                   └───────────┬─────────────┘     │
+│                                                 │                   │
+│   ┌─────────────┐     destroy(owner)            │                   │
+│   │   Owner     │ ─────────────────────────────┼──► onlyOwner ✓    │
+│   └─────────────┘     (onlyOwner modifier)      │         │         │
+│                                                 │         ▼         │
+│   ┌─────────────┐     destroy(attacker)         │   selfdestruct    │
+│   │  Attacker   │ ─────────────────────────────┼──► REVERTED ✗     │
+│   └─────────────┘     (BLOCKED!)               │                   │
+└─────────────────────────────────────────────────────────────────────┘
+</div>
+
+<h2>6. Comparison: Vulnerable vs Fixed</h2>
+
+<table>
+    <tr>
+        <th>Aspect</th>
+        <th class="danger">Vulnerable (SWC-106)</th>
+        <th class="success">Fixed</th>
+    </tr>
+    <tr>
+        <td>Who can destroy?</td>
+        <td>Anyone</td>
+        <td>Owner only</td>
+    </tr>
+    <tr>
+        <td>Access control</td>
+        <td>None</td>
+        <td><code>onlyOwner</code> modifier</td>
+    </tr>
+    <tr>
+        <td>ETH destination</td>
+        <td>Attacker chooses</td>
+        <td>Owner specifies</td>
+    </tr>
+    <tr>
+        <td>Production safe?</td>
+        <td>❌ Never deploy</td>
+        <td>✅ Yes (if properly restricted)</td>
+    </tr>
+</table>
+
+<h2>7. Code Examples</h2>
+
+<h3>7.1 Vulnerable Code (SWC-106)</h3>
+<pre>// ⚠️ VULNERABILITY: No access control
+function destroy(address payable _to) external {
+    selfdestruct(_to);  // Anyone can call!
+}</pre>
+
+<h3>7.2 Fixed Code (Remediation)</h3>
+<pre>// ✅ FIXED: OpenZeppelin Ownable
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+function destroy(address payable _to) external onlyOwner {
+    require(_to != address(0), "Invalid recipient");
+    selfdestruct(_to);
+}</pre>
+
+<h2>8. Parity Wallet Incident (Real-World)</h2>
+<p>In 2017, a user accidentally called <code>initWallet()</code> on the Parity multi-sig library, making themselves "owner", then called <code>kill()</code> which executed <code>selfdestruct</code>. <strong>Result:</strong> ~$300M in ETH frozen.</p>
+<p><a href="https://www.parity.io/a-postmortem-on-the-parity-multi-sig-library-self-destruct/">Parity Postmortem</a></p>
+
+<h2>9. Remediation Checklist</h2>
+<ul>
+    <li>Remove <code>selfdestruct</code> unless absolutely required</li>
+    <li>If needed: add <code>onlyOwner</code> or role-based access (e.g. AccessControl)</li>
+    <li>For high-value contracts: use multisig (Gnosis Safe)</li>
+    <li>Run Slither/Mythril to detect SWC-106</li>
+</ul>
+
+<h2>10. Reflection / Key Takeaways</h2>
+<ul>
+    <li><strong>SWC-106</strong> = Unprotected SELFDESTRUCT — critical if anyone can call it</li>
+    <li><strong>Remediation</strong>: Always protect <code>selfdestruct</code> with <code>onlyOwner</code> or role-based access</li>
+    <li><strong>Best practice</strong>: Remove selfdestruct if not needed; use multisig for high-value contracts</li>
+    <li><strong>Real-world</strong>: Parity wallet incident ($300M frozen) — init + kill = disaster</li>
+</ul>
+
+<footer class="report-footer">
+    <p>Group A — SWC-106 Solution | Lab 7 DApp Security | MDT915</p>
+</footer>
+
+</body>
+</html>

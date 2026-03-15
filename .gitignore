@@ -48,3 +48,8 @@ MDT915_Individual_Contribution_*.md
 GITHUB_PUSH_INSTRUCTIONS.md
 generate-report-pdf.js
 /logo.png
+lab7_temp.docx
+
+# Workshop temp files
+workshop6/docx_extract/
+workshop6/*.zip
