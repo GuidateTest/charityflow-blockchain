@@ -78,16 +78,23 @@ export function Web3Provider({ children }) {
     } catch (_) {}
   }, [initContract]);
 
-  // Auto-reconnect on page load if already authorized AND user hasn't
-  // explicitly disconnected via our UI.
+  // Always init read-only contract for Sepolia so campaigns load without wallet.
+  // Auto-reconnect on page load if already authorized AND user hasn't disconnected.
   useEffect(() => {
-    if (!window.ethereum) return;
-    const userDisconnected = localStorage.getItem("cf-wallet-disconnected") === "1";
-    if (userDisconnected) {
+    const initReadOnly = () => {
       try {
         const fallback = new ethers.JsonRpcProvider(READ_RPC_URL);
         initContract(fallback, 11155111);
       } catch (_) {}
+    };
+
+    if (!window.ethereum) {
+      initReadOnly();
+      return;
+    }
+    const userDisconnected = localStorage.getItem("cf-wallet-disconnected") === "1";
+    if (userDisconnected) {
+      initReadOnly();
       return;
     }
     window.ethereum
@@ -104,11 +111,10 @@ export function Web3Provider({ children }) {
           setChainId(_chainId);
           initContract(_signer, _chainId);
         } else {
-          const fallback = new ethers.JsonRpcProvider(READ_RPC_URL);
-          initContract(fallback, 11155111);
+          initReadOnly();
         }
       })
-      .catch(() => {});
+      .catch(() => initReadOnly());
   }, [initContract]);
 
   // Listen for account/chain changes
