@@ -43,6 +43,8 @@ node_modules/puppeteer/
 # Not for repo
 workshop4/
 workshop5/
+workshop6/
+LAB_7/
 MDT915_Project_Assignment.docx
 MDT915_Individual_Contribution_*.md
 GITHUB_PUSH_INSTRUCTIONS.md
@@ -50,6 +52,3 @@ generate-report-pdf.js
 /logo.png
 lab7_temp.docx
 
-# Workshop temp files
-workshop6/docx_extract/
-workshop6/*.zip
