@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Shield, CheckCircle, Wallet } from "lucide-react";
+import { Shield, CheckCircle, Wallet, DollarSign, Percent, UserCog } from "lucide-react";
 import { useWeb3 } from "../context/Web3Context";
 import { formatEth, shortAddress } from "../utils/contract";
 import "./AdminDashboard.css";
@@ -11,13 +11,35 @@ export default function AdminDashboard() {
   const [verifying, setVerifying] = useState(null);
   const [status, setStatus] = useState(null);
 
+  // Platform stats
+  const [platformFees, setPlatformFees] = useState("0");
+  const [feePercent, setFeePercent] = useState("2");
+
   // Verify charity form
   const [charityAddr, setCharityAddr] = useState("");
   const [campaignId, setCampaignId] = useState("");
+  const [cancelCampaignId, setCancelCampaignId] = useState("");
+  const [newFeeBp, setNewFeeBp] = useState("");
+  const [newAdminAddr, setNewAdminAddr] = useState("");
 
   useEffect(() => {
     loadPendingProofs();
+    loadPlatformStats();
   }, [contract]);
+
+  async function loadPlatformStats() {
+    if (!contract) return;
+    try {
+      const [fees, feeBp] = await Promise.all([
+        contract.totalPlatformFees(),
+        contract.platformFeePercent(),
+      ]);
+      setPlatformFees(fees.toString());
+      setFeePercent((Number(feeBp) / 100).toFixed(1));
+    } catch (e) {
+      console.error("Failed to load platform stats:", e);
+    }
+  }
 
   async function loadPendingProofs() {
     if (!contract) {
@@ -96,6 +118,80 @@ export default function AdminDashboard() {
       await tx.wait();
       setStatus({ type: "success", msg: `Campaign #${campaignId} verified.` });
       setCampaignId("");
+    } catch (e) {
+      setStatus({ type: "error", msg: e.reason || e.message || "Failed" });
+    } finally {
+      setVerifying(null);
+    }
+  }
+
+  async function handleWithdrawFees() {
+    if (!contract || !isAdmin) return;
+    setVerifying("withdraw");
+    setStatus(null);
+    try {
+      const tx = await contract.withdrawPlatformFees();
+      await tx.wait();
+      setStatus({ type: "success", msg: "Platform fees withdrawn." });
+      loadPlatformStats();
+    } catch (e) {
+      setStatus({ type: "error", msg: e.reason || e.message || "Failed" });
+    } finally {
+      setVerifying(null);
+    }
+  }
+
+  async function handleUpdateFee(e) {
+    e.preventDefault();
+    if (!contract || !isAdmin || !newFeeBp.trim()) return;
+    const bp = Math.round(parseFloat(newFeeBp) * 100);
+    if (bp < 0 || bp > 1000) {
+      setStatus({ type: "error", msg: "Fee must be 0–10%" });
+      return;
+    }
+    setVerifying("fee");
+    setStatus(null);
+    try {
+      const tx = await contract.updateFeePercent(bp);
+      await tx.wait();
+      setStatus({ type: "success", msg: `Fee updated to ${newFeeBp}%.` });
+      setNewFeeBp("");
+      loadPlatformStats();
+    } catch (e) {
+      setStatus({ type: "error", msg: e.reason || e.message || "Failed" });
+    } finally {
+      setVerifying(null);
+    }
+  }
+
+  async function handleTransferAdmin(e) {
+    e.preventDefault();
+    if (!contract || !isAdmin || !newAdminAddr.trim()) return;
+    setVerifying("transfer");
+    setStatus(null);
+    try {
+      const tx = await contract.transferAdmin(newAdminAddr.trim());
+      await tx.wait();
+      setStatus({ type: "success", msg: `Admin transferred to ${shortAddress(newAdminAddr)}.` });
+      setNewAdminAddr("");
+      window.location.reload();
+    } catch (e) {
+      setStatus({ type: "error", msg: e.reason || e.message || "Failed" });
+    } finally {
+      setVerifying(null);
+    }
+  }
+
+  async function handleCancelCampaign(e) {
+    e.preventDefault();
+    if (!contract || !isAdmin || !cancelCampaignId.trim()) return;
+    setVerifying("cancel");
+    setStatus(null);
+    try {
+      const tx = await contract.cancelCampaign(Number(cancelCampaignId.trim()));
+      await tx.wait();
+      setStatus({ type: "success", msg: `Campaign #${cancelCampaignId} cancelled.` });
+      setCancelCampaignId("");
     } catch (e) {
       setStatus({ type: "error", msg: e.reason || e.message || "Failed" });
     } finally {
@@ -216,6 +312,83 @@ export default function AdminDashboard() {
             />
             <button type="submit" className="btn btn-primary" disabled={verifying === "campaign"}>
               {verifying === "campaign" ? "Verifying..." : "Verify Campaign"}
+            </button>
+          </form>
+        </section>
+
+        {/* Platform fees */}
+        <section className="admin-section card">
+          <h2><DollarSign size={18} /> Platform fees</h2>
+          <p className="caption" style={{ marginBottom: 12 }}>
+            Accumulated fees: <strong>{formatEth(platformFees, 4)} ETH</strong>
+          </p>
+          <button
+            className="btn btn-primary"
+            onClick={handleWithdrawFees}
+            disabled={verifying === "withdraw" || BigInt(platformFees) === 0n}
+          >
+            {verifying === "withdraw" ? "Withdrawing..." : "Withdraw fees"}
+          </button>
+        </section>
+
+        {/* Update fee */}
+        <section className="admin-section card">
+          <h2><Percent size={18} /> Update platform fee</h2>
+          <p className="caption" style={{ marginBottom: 12 }}>
+            Current fee: <strong>{feePercent}%</strong> (max 10%)
+          </p>
+          <form onSubmit={handleUpdateFee} className="admin-form">
+            <input
+              className="input"
+              type="number"
+              step="0.1"
+              min="0"
+              max="10"
+              placeholder="New fee % (e.g. 2.5)"
+              value={newFeeBp}
+              onChange={(e) => setNewFeeBp(e.target.value)}
+            />
+            <button type="submit" className="btn btn-primary" disabled={verifying === "fee"}>
+              {verifying === "fee" ? "Updating..." : "Update fee"}
+            </button>
+          </form>
+        </section>
+
+        {/* Transfer admin */}
+        <section className="admin-section card">
+          <h2><UserCog size={18} /> Transfer admin</h2>
+          <p className="caption" style={{ marginBottom: 12 }}>
+            Transfer platform admin to a new address. This action is irreversible.
+          </p>
+          <form onSubmit={handleTransferAdmin} className="admin-form">
+            <input
+              className="input"
+              placeholder="New admin address (0x...)"
+              value={newAdminAddr}
+              onChange={(e) => setNewAdminAddr(e.target.value)}
+            />
+            <button type="submit" className="btn btn-secondary" disabled={verifying === "transfer"}>
+              {verifying === "transfer" ? "Transferring..." : "Transfer admin"}
+            </button>
+          </form>
+        </section>
+
+        {/* Cancel campaign */}
+        <section className="admin-section card">
+          <h2>Cancel campaign</h2>
+          <p className="caption" style={{ marginBottom: 12 }}>
+            Cancel an active campaign and enable donor refunds.
+          </p>
+          <form onSubmit={handleCancelCampaign} className="admin-form">
+            <input
+              className="input"
+              type="number"
+              placeholder="Campaign ID"
+              value={cancelCampaignId}
+              onChange={(e) => setCancelCampaignId(e.target.value)}
+            />
+            <button type="submit" className="btn btn-secondary" disabled={verifying === "cancel"}>
+              {verifying === "cancel" ? "Cancelling..." : "Cancel campaign"}
             </button>
           </form>
         </section>
